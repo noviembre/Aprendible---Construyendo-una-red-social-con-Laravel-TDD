@@ -3,12 +3,14 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class CreateStatusTest extends TestCase
 {
+    use DatabaseMigrations;
 
     /** @test */
     function an_authenticated_user_can_create_statuses()
@@ -18,11 +20,11 @@ class CreateStatusTest extends TestCase
         $this->actingAs($user);
 
         // 2. When => Cuando hace un post request a status
-        $this->post(route('status.store'), [ 'body' => 'Mi priemr status' ]);
+        $this->post(route('status.store'), [ 'body' => 'Mi primer status' ]);
 
         // 3. Then => entonces veo un nuevo estado en la db
         $this->assertDatabaseHas('statuses', [
-            'body' => 'Mi Primer status'
+            'body' => 'Mi primer status'
         ]);
     }
 }
